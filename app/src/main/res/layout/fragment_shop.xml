@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".FragmentShop">
+    tools:context=".view.FragmentShop">
 
 
 
@@ -28,7 +28,7 @@
                         android:id="@+id/textView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@raw/font_petopia"
+                        android:fontFamily="@font/jost_semibold"
                         android:gravity="center"
                         android:text="Shop"
                         android:textSize="22sp"
@@ -109,8 +109,9 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewShopItemID"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:layout_margin="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/recyclerViewShopCategoryID" />

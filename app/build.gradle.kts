@@ -46,5 +46,17 @@ dependencies {
     // sdp library - for responsiveness
     implementation ("com.intuit.sdp:sdp-android:1.1.0")
 
+    // retrofit & gson
+    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation ("com.squareup.okhttp3:okhttp:3.14.9")
+
+    // volley and glide library
+    implementation ("com.android.volley:volley:1.2.1")
+    implementation ("com.github.bumptech.glide:glide:4.14.2")
+
+    // Image Slide library  -  https://github.com/denzcoskun/ImageSlideshow
+    implementation ("com.github.denzcoskun:ImageSlideshow:0.1.2")
+
 
 }

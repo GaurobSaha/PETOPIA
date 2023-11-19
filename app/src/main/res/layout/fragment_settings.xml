@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".FragmentSettings">
+    tools:context=".view.FragmentSettings">
 
    <androidx.constraintlayout.widget.ConstraintLayout
        android:layout_width="match_parent"
@@ -26,7 +26,7 @@
                    android:id="@+id/textView"
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
-                   android:fontFamily="@raw/font_petopia"
+                   android:fontFamily="@font/jost_semibold"
                    android:gravity="center"
                    android:text="Settings"
                    android:textSize="22sp"
@@ -43,7 +43,7 @@
            android:id="@+id/tvAccount"
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
-           android:fontFamily="@raw/font_petopia"
+           android:fontFamily="@font/kanit_semibold"
            android:layout_margin="@dimen/_7sdp"
            android:gravity="center"
            android:text="Account"
@@ -103,7 +103,7 @@
                    android:fontFamily="@font/nunito_sans_bold"
                    android:gravity="left|center_vertical"
                    android:paddingLeft="15dp"
-                   android:text="Gaurob Saha"
+                   android:text="Mehadi Hasan Shakil"
                    android:textColor="@color/black"
                    android:textSize="20sp"
                    app:layout_constraintEnd_toEndOf="parent"
@@ -117,7 +117,7 @@
                    android:fontFamily="sans-serif-light"
                    android:gravity="left|center_vertical"
                    android:paddingLeft="15dp"
-                   android:text="Gaurob Saha@gmail.com"
+                   android:text="mehadihasan469@gmail.com"
                    android:textColor="@color/black"
                    android:textSize="16sp"
                    app:layout_constraintEnd_toEndOf="parent"
@@ -152,7 +152,7 @@
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
            android:layout_margin="@dimen/_7sdp"
-           android:fontFamily="@raw/font_petopia"
+           android:fontFamily="@font/kanit_semibold"
            android:gravity="center"
            android:text="Settings"
            android:textColor="#E1090909"
