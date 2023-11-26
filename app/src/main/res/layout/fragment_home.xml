@@ -14,13 +14,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
-
-
-
-
-
-
         <androidx.cardview.widget.CardView
             android:id="@+id/toolbarID"
             android:layout_width="match_parent"
@@ -63,13 +56,14 @@
 
 
         <TextView
+            android:id="@+id/TvAddYourPet"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:fontFamily="@font/nunito_black"
             android:text="Add"
             android:textSize="18sp"
-            android:textColor="#707070"
+            android:textColor="#D5707070"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbarID" />
 

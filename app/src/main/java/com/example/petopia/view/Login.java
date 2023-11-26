@@ -23,7 +23,7 @@ public class Login extends AppCompatActivity implements ILogView {
     private Button loginBtn;
     private TextView goToSignup;
     ILogController loginController;
-    // Declare the SharedPreferences variable
+    private boolean isLoggedIn;
     private SharedPreferences sharedPrefs;
 
     @Override
@@ -35,7 +35,7 @@ public class Login extends AppCompatActivity implements ILogView {
         sharedPrefs = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
 
         // Retrieve the boolean value from sharedPrefs
-        boolean isLoggedIn = sharedPrefs.getBoolean("isLoggedIn", false);
+        isLoggedIn = sharedPrefs.getBoolean("isLoggedIn", false);
 
         // Check the value of isLoggedIn and navigate accordingly
         if (isLoggedIn) {
@@ -73,13 +73,11 @@ public class Login extends AppCompatActivity implements ILogView {
 
 
     @Override
-    public void onLoginSuccess(String message) {
+    public void onLoginSuccess(String message, String userID) {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
-        // Get the SharedPreferences editor
         SharedPreferences.Editor editor = sharedPrefs.edit();
-        // Modify the preferences using the editor
         editor.putBoolean("isLoggedIn", true);
-        // Apply the changes
+        editor.putString("user_id", userID);
         editor.apply();
 
         navigateToMainActivity();

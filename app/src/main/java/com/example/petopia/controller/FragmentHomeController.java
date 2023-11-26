@@ -1,6 +1,11 @@
 package com.example.petopia.controller;
 
+import android.content.Context;
+import com.example.petopia.Observer.DataObserver;
+import com.example.petopia.adapter.PetAdapter;
 import com.example.petopia.model.pojo.Event;
+import com.example.petopia.model.pojo.UserID;
+import com.example.petopia.model.pojo.YourPet;
 import com.example.petopia.model.repository.Repository;
 import com.example.petopia.view.IFragmentHomeView;
 
@@ -14,26 +19,29 @@ import retrofit2.Response;
 public class FragmentHomeController implements IFragmentHomeController {
 
 
+    private List<DataObserver> observers = new ArrayList<>();
     IFragmentHomeView fragmentHomeView;
+    Context context;
     Repository repository;
     private List<Event> eventList = new ArrayList<>();
+    private List<YourPet> petList = new ArrayList<>();
 
-    public FragmentHomeController(IFragmentHomeView FragmentHomeView) {
+    public FragmentHomeController(IFragmentHomeView FragmentHomeView, Context context) {
         this.fragmentHomeView = FragmentHomeView;
+        this.context = context;
         this.repository = new Repository();
     }
+
 
     @Override
     public void onGetEvents() {
 
         try {
-            repository.getEvents(new Callback<List<Event>>(){
-
-
+            repository.getEvents(new Callback<List<Event>>() {
                 @Override
                 public void onResponse(Call<List<Event>> call, Response<List<Event>> response) {
                     if (response.isSuccessful() && response.body() != null) {
-                        List<Event> eventList = response.body();
+                        eventList = response.body();
                         fragmentHomeView.onGetEvents(eventList);
                     } else {
                         fragmentHomeView.onErrorEvents("Error: " + response.message());
@@ -45,46 +53,65 @@ public class FragmentHomeController implements IFragmentHomeController {
                     fragmentHomeView.onErrorEvents("Exception: " + t.getMessage());
                 }
             });
-        }catch (Exception e){
+        } catch (Exception e) {
             fragmentHomeView.onErrorEvents("Exception: " + e.getMessage());
         }
 
-
-
     }
+
+
+    @Override
+    public void onGetYourPet(String user_id) {
+        UserID userID = new UserID(user_id);
+        try {
+            repository.getYourPet(userID, new Callback<List<YourPet>>() {
+                @Override
+                public void onResponse(Call<List<YourPet>> call, Response<List<YourPet>> response) {
+                    if (response.isSuccessful() && response.body() != null) {
+                        List<YourPet> yourPetList = response.body();
+                        fragmentHomeView.onGetYourPetSuccess(yourPetList);
+                        setData(yourPetList);
+                    } else {
+                        fragmentHomeView.onGetYourPetError("Error 404");
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<List<YourPet>> call, Throwable t) {
+                    fragmentHomeView.onGetYourPetError("Exception: " + t.getMessage());
+                }
+            });
+        } catch (Exception e) {
+            fragmentHomeView.onGetYourPetError("Exception: " + e.getMessage());
+        }
+    }
+
+    public void setData(List<YourPet> yourPets) {
+        this.petList = yourPets;
+        notifyObservers();
+    }
+
+
+    @Override
+    public void addObserver(DataObserver observer) {
+        observers.add(observer);
+    }
+
+    @Override
+    public void removeObserver(DataObserver observer) {
+        observers.remove(observer);
+    }
+
+    @Override
+    public void notifyObservers() {
+        for (DataObserver observer : observers) {
+            observer.onDataChanged(petList);
+        }
+    }
+
+
+
+
+
 }
 
-
-
-
-//    @Override
-//    public void onResponse(Call<List<Event>> call, Response<List<Event>> response) {
-//        if (response.isSuccessful() && response.body() != null) {
-//            // Clear existing data
-//            eventList.clear();
-//
-//            // Add new data
-//            eventList.addAll(response.body());
-//            // Extract imageUrls from Event objects
-//            List<String> imageUrlList = new ArrayList<>();
-//            for (Event event : eventList) {
-//                imageUrlList.add(event.getImageUrl());
-//            }
-//
-//            fragmentHomeView.onGetEvents(imageUrlList);
-//
-//            // Notify the adapter that the data has changed
-//            // adapter.notifyDataSetChanged();
-//        } else {
-//            // Handle HTTP error
-//            // Toast.makeText(getContext(), "HTTP Error: " + response.code(), Toast.LENGTH_SHORT).show();
-//            fragmentHomeView.onErrorEvents("HTTP Error: " + response.code());
-//        }
-//    }
-//
-//    @Override
-//    public void onFailure(Call<List<Event>> call, Throwable t) {
-//        // Handle network failure
-//        // Toast.makeText(getContext(), "Network Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
-//        fragmentHomeView.onErrorEvents("Exception: " + t.getMessage());
-//    }

@@ -58,5 +58,8 @@ dependencies {
     // Image Slide library  -  https://github.com/denzcoskun/ImageSlideshow
     implementation ("com.github.denzcoskun:ImageSlideshow:0.1.2")
 
+    // lottie library
+    implementation ("com.airbnb.android:lottie:6.2.0")
+
 
 }

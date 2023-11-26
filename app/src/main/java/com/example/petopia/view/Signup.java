@@ -2,7 +2,9 @@ package com.example.petopia.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -21,6 +23,7 @@ public class Signup extends AppCompatActivity implements ISignView {
     private Button SignupBtn;
     private TextView goToLogin;
     ILogController signupController;
+    private SharedPreferences sharedPrefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,12 +31,20 @@ public class Signup extends AppCompatActivity implements ISignView {
         setContentView(R.layout.activity_signup);
         signupController = new LoginController(this);
 
-
         SignupEmail = findViewById(R.id.SignUpEmailID);
         SignupPassword = findViewById(R.id.newPasswordSignUpId);
         SignupConfirmPassword = findViewById(R.id.confirmNewPasswordSignUpId);
         SignupBtn = findViewById(R.id.signupButtonID);
         goToLogin = findViewById(R.id.goToLoginPageID);
+
+
+
+        // Initialize sharedPrefs in an appropriate method, such as onCreate() for an Activity
+        sharedPrefs = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        // Retrieve the boolean value from sharedPrefs
+        boolean isLoggedIn = sharedPrefs.getBoolean("isLoggedIn", false);
+
+
 
         goToLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,7 +72,17 @@ public class Signup extends AppCompatActivity implements ISignView {
     }
 
     @Override
-    public void onSignupSuccess(String message) {
+    public void onSignupSuccess(String message, String userID) {
+
+        // Get the SharedPreferences editor
+        SharedPreferences.Editor editor = sharedPrefs.edit();
+        // Modify the preferences using the editor
+        editor.putBoolean("isLoggedIn", true);
+        editor.putString("user_id", userID);
+        editor.apply();
+
+
+
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
